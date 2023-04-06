@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+  Search Page
+{% endblock title %}
+{% block content %}
+
+
+<section id="search" class="my-3">
+
+    <div class="container">
+        <div class="row g-2">
+            {% if search %}
+              {% for item in search %}
+              <div class="col-md-4">
+                <a href="{% url 'product' item.id %}" class="text-decoration-none link-dark">
+                  <div class="card">
+                    <img src="{{item.image.url}}" height="250" alt="{{item.title}}" class="card-img">
+                    <h5>{{item.title}}</h5>
+                </div>
+                </a>
+            </div>
+              {% endfor %}
+            {% else %}
+              <p class="lead bg-danger text-white">No products added yet</p>
+            {% endif %}
+            
+        </div>
+    </div>
+</section>
+
+  
+{% endblock content %}

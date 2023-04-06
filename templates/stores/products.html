@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}
+  Product Page
+{% endblock title %}
+{% block content %}
+
+
+<section id="category" class="my-3 py-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Products</li>
+        </ol>
+      </nav>
+    <div class="container">
+        <div class="row gy-3">
+            {% if paginator %}
+              {% for item in paginator  %}
+              <div class="col-md-4">
+                <div class="card">
+                    <img src="{{item.image.url}}"  height="250" alt="{{item.title}}" class="card-img">
+                    <div class="card-body">
+                        <h5 class="display-6">{{item.title}}</h5>
+                        <p class="lead">{{item.description |truncatewords:20}}</p>
+                        <h4>&#8358; {{item.price|intcomma}}</h4>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{% url 'addtocart' item.id %}" class="btn btn-success">Add To Cart</a>
+                        <a href="{% url 'product' item.id %}" class="btn btn-info">More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <!-- paginator -->
+            <div class="col-md-5 mx-auto">
+              <ul class="pagination">
+                {% if paginator.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page={{paginator.previous_page_number}}">Previous</a></li>
+                  {% else %}
+                  <li class="page-item" disabled><a class="page-link" >Previous</a></li>
+                {% endif %}
+
+                {% for i in paginator.paginator.page_range  %}
+                {% if i == paginator.number %}
+                  <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if paginator.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{paginator.next_page_number}}">Next</a></li>
+                  {% else %}
+                  <li class="page-item" disabled><a class="page-link">Next</a></li>
+                {% endif %}
+                
+              </ul>
+            </div>
+            <!-- paginator -->
+
+
+
+
+
+
+            {% else %}
+              <p class="lead bg-danger text-white">No category base on the selected item</p>
+            {% endif %}
+            
+        </div>
+
+    </div>
+</section>
+
+  
+{% endblock content %}

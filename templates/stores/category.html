@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+  Category Page
+{% endblock title %}
+{% block content %}
+
+
+<section id="category" class="my-3">
+    <h5 class="display-5 text-center my-3">{{cat.title}}</h5>
+    <div class="container">
+        <div class="row">
+            {% if category %}
+              {% for item in category %}
+              <div class="col-md-4">
+                <div class="card">
+                    <img src="{{item.image.url}}" height="250" alt="{{item.title}}" class="card-img">
+                    <h5>{{item.title}}</h5>
+                </div>
+            </div>
+              {% endfor %}
+            {% else %}
+              <p class="lead bg-danger text-white">No products added yet</p>
+            {% endif %}
+            
+        </div>
+    </div>
+</section>
+
+  
+{% endblock content %}
